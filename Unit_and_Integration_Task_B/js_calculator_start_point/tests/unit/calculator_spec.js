@@ -96,7 +96,9 @@ describe('calculator', function () {
   it('it should give JS Infinity when dividing by zero', function(){
     calculator.previousTotal = 10;
     calculator.divide(0);
-    assert.equal(calculator.runningTotal, Infinity);
+    // assert.equal(calculator.runningTotal, Infinity);
+    //update for divide by 0
+    assert.equal(calculator.runningTotal, 'undefined');
   });
 
   it('it should give NaN when dividing by zero by zero', function(){
@@ -159,8 +161,64 @@ describe('calculator', function () {
     assert.equal(calculator.previousOperator, null);
   });
 
+  //required?
+  it('should multiply 3x5 and get 15', function(){
+    calculator.numberClick(3);
+    calculator.operatorClick('*');
+    calculator.numberClick(5);
+    calculator.operatorClick('=');
+    assert.equal(calculator.runningTotal, 15);
+  });
 
+  it('should divide 21/7 and get 3', function(){
+    calculator.numberClick(21);
+    calculator.operatorClick('/');
+    calculator.numberClick(7);
+    calculator.operatorClick('=');
+    assert.equal(calculator.runningTotal, 3);
+  });
 
+  it('should add 1+4 and get 5', function(){
+    calculator.numberClick(1);
+    calculator.operatorClick('+');
+    calculator.numberClick(4);
+    calculator.operatorClick('=');
+    assert.equal(calculator.runningTotal, 5);
+  });
 
+  it('should subtract 7-4 and get 3', function(){
+    calculator.numberClick(7);
+    calculator.operatorClick('-');
+    calculator.numberClick(4);
+    calculator.operatorClick('=');
+    assert.equal(calculator.runningTotal, 3);
+  });
+
+  it('should concatenate multiple number button clicks', function(){
+    calculator.numberClick(7);
+    calculator.numberClick(4);
+    assert.equal(calculator.runningTotal, 74);
+  })
+
+  it('should hain multiple operations together', function(){
+    calculator.numberClick(3);
+    calculator.operatorClick('*');
+    calculator.numberClick(5);
+    calculator.operatorClick('-');
+    calculator.numberClick(2);
+    calculator.operatorClick('=');
+    assert.equal(calculator.runningTotal, 13);
+  })
+
+  it('should clear the running total without affecting the calculation', function(){
+    calculator.numberClick(3);
+    calculator.operatorClick('*');
+    calculator.numberClick(5);
+    calculator.clearClick();
+    calculator.numberClick(9);
+    calculator.operatorClick('=');
+    assert.equal(calculator.runningTotal, 27);
+
+  })
 
 });
